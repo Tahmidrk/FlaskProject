@@ -62,4 +62,10 @@ def post():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # This creates the tables
+    # For local development
     app.run(host='0.0.0.0', port=5000, debug=False)
+
+# For production (Render will use this with gunicorn)
+if __name__ != '__main__':
+    with app.app_context():
+        db.create_all()
