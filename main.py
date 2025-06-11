@@ -5,8 +5,9 @@ import pymysql
 import os
 
 app = Flask(__name__)
-# Use environment variable for database URL in production, fallback to local for development
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', 'mysql+pymysql://root:@localhost/flaskproject')
+# Use environment variable for database URL in production, fallback to local MySQL for development
+database_url = os.environ.get('DATABASE_URL', 'mysql+pymysql://root:@localhost/flaskproject')
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
