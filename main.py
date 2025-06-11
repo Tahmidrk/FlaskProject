@@ -2,10 +2,11 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pymysql
+import os
 
 app = Flask(__name__)
-# Replace with your actual MySQL credentials
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://root:@localhost/flaskproject'
+# Use environment variable for database URL in production, fallback to local for development
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', 'mysql+pymysql://root:@localhost/flaskproject')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -60,4 +61,4 @@ def post():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # This creates the tables
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)
